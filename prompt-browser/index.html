@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>肖像提示词浏览器</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Prompt Atlas</p>
+        <h1>肖像提示词浏览器</h1>
+        <p class="hero-text">
+          面向本地素材库的静态网页版本。支持按主类、场景、构图、光线、服装、风格等多维度过滤，
+          每条提示词都可以一键复制，适合快速检索、选题和二次整理。
+        </p>
+      </div>
+      <div class="hero-panel">
+        <div class="hero-stat">
+          <span>总提示词</span>
+          <strong id="total-count">0</strong>
+        </div>
+        <div class="hero-stat">
+          <span>当前结果</span>
+          <strong id="visible-count">0</strong>
+        </div>
+        <div class="hero-stat">
+          <span>数据分卷</span>
+          <strong id="part-count">0</strong>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <div id="sidebar-backdrop" class="sidebar-backdrop"></div>
+
+      <aside id="sidebar" class="sidebar" aria-label="筛选与分类侧栏">
+        <div class="sidebar-mobile-head">
+          <div>
+            <p class="sidebar-kicker">Filter Drawer</p>
+            <h2>筛选与分类</h2>
+          </div>
+          <button id="close-sidebar" class="ghost-button sidebar-close" type="button" aria-label="关闭筛选菜单">关闭</button>
+        </div>
+
+        <section class="panel search-panel">
+          <label class="field-label" for="search-input">关键词搜索</label>
+          <input id="search-input" class="text-input" type="search" placeholder="搜索场景、服装、动作或原始提示词">
+          <div class="search-actions">
+            <button id="clear-filters" class="ghost-button" type="button">清空筛选</button>
+            <button id="copy-summary" class="ghost-button" type="button">复制当前统计</button>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>主类速筛</h2>
+            <span id="active-filter-count" class="tiny-pill">0 个筛选</span>
+          </div>
+          <div id="primary-chips" class="chip-cloud"></div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>详细过滤</h2>
+            <button id="toggle-advanced" class="link-button" type="button">展开/收起</button>
+          </div>
+          <div id="advanced-filters" class="filter-grid">
+            <label class="select-field">
+              <span>卷号</span>
+              <select id="filter-part"></select>
+            </label>
+            <label class="select-field">
+              <span>主类</span>
+              <select id="filter-primary"></select>
+            </label>
+            <label class="select-field">
+              <span>场景</span>
+              <select id="filter-scene"></select>
+            </label>
+            <label class="select-field">
+              <span>构图</span>
+              <select id="filter-shot"></select>
+            </label>
+            <label class="select-field">
+              <span>光线</span>
+              <select id="filter-light"></select>
+            </label>
+            <label class="select-field">
+              <span>服装</span>
+              <select id="filter-clothing"></select>
+            </label>
+            <label class="select-field">
+              <span>发型</span>
+              <select id="filter-hair"></select>
+            </label>
+            <label class="select-field">
+              <span>动作</span>
+              <select id="filter-pose"></select>
+            </label>
+            <label class="select-field">
+              <span>道具</span>
+              <select id="filter-prop"></select>
+            </label>
+            <label class="select-field">
+              <span>风格</span>
+              <select id="filter-style"></select>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-heading">
+            <h2>高频分布</h2>
+            <span class="tiny-pill">当前结果集</span>
+          </div>
+          <div id="summary-groups" class="summary-groups"></div>
+        </section>
+      </aside>
+
+      <section class="content">
+        <div class="mobile-filter-bar">
+          <button id="open-sidebar" class="secondary-button mobile-filter-button" type="button">
+            <span>筛选与分类</span>
+            <strong id="mobile-filter-count">0 个筛选</strong>
+          </button>
+          <div class="mobile-result-pill">
+            <span>当前结果</span>
+            <strong id="mobile-visible-count">0</strong>
+          </div>
+        </div>
+
+        <div id="active-filters" class="active-filters"></div>
+        <section id="random-feature" class="random-feature"></section>
+        <div id="results-grid" class="results-grid"></div>
+
+        <div id="pagination" class="pagination"></div>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+
+  <script src="./prompts-data.js"></script>
+  <script src="./app.js"></script>
+</body>
+</html>
